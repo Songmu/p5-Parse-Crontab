@@ -2,11 +2,88 @@ package Parse::Crontab;
 use 5.008_001;
 use strict;
 use warnings;
+use Carp;
 
 our $VERSION = '0.01';
 
+use Mouse;
+use Path::Class qw/file/;
 
-1;
+use Parse::Crontab::Entry::Env;
+use Parse::Crontab::Entry::Job;
+use Parse::Crontab::Entry::Comment;
+use Parse::Crontab::Entry::Empty;
+use Parse::Crontab::Entry::Error;
+
+has file => (
+    is => 'ro',
+);
+
+has content => (
+    is   => 'ro',
+    isa  => 'Str',
+    lazy => 1,
+    default => sub {
+        my $self = shift;
+        croak 'Attribute file or content is required!' unless defined $self->file;
+        file($self->file)->slurp;
+    },
+);
+
+has entries => (
+    is => 'rw',
+    isa => 'ArrayRef[Parse::Crontab::Entry]',
+    default => sub {[]},
+    auto_deref => 1,
+);
+
+has env => (
+    is => 'rw',
+    isa => 'HashRef',
+    default => sub {{}},
+);
+
+
+no Mouse;
+
+sub BUILD {
+    my $self = shift;
+
+    my $line_number = 1;
+    for my $line (split /\r?\n/, $self->content) {
+        my $entry_class = 'Parse::Crontab::Entry::'. $self->_decide_entry_class($line);
+        my $entry = $entry_class->new(line => $line, line_number => $line_number);
+        $line_number++;
+
+        if ($entry_class eq 'Parse::Crontab::Entry::Env' && !$entry->is_error) {
+            # overwritten if same key already exists
+            $self->env->{$entry->key} = $entry->value;
+        }
+        push $self->entries, $entry;
+    }
+}
+
+sub _decide_entry_class {
+    my ($self, $line) = @_;
+
+    if ($line =~ /^#/) {
+        'Comment';
+    }
+    elsif ($line =~ /^\s*$/) {
+        'Empty';
+    }
+    elsif ($line =~ /^(?:@|\*|[0-9])/) {
+        'Job';
+    }
+    elsif ($line =~ /=/) {
+        'Env';
+    }
+    else {
+        'Error';
+    }
+}
+
+__PACKAGE__->meta->make_immutable;
 __END__
 
 =head1 NAME
