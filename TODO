@@ -1,13 +1,11 @@
-- Parse::Crontab::Schedule を作る？
-- */2 とかのバリデーション(オブジェクト化?)
- - Parse::Crontab::Schedule::Entity->new('*/10', range => [0,59], map => {mon => 1}); とか？
+- Parse::Crontab::Scheduleを作る
+- */2 とかのバリデーション
+ - Parse::Crontab::Schedule::Entity->new('*/10', range => [0,59], map => {mon => 1});
  - monとかjanとかを置き換える
- - ,でsplit -> /でsplit -> rangeの検証
  - L,#,W,?あたりはvixie cronが未対応ぽいので無視
- - rangeの検証
- - max値の検証
  - Sunが1 or 7なのがめんどい
   - sun-fri は ok. mon-sun はng. 1-7はok
+  - sunを0にマッピングすれば良さげ
 - 危ない指定に警告を出す
  - 毎分指定。明示的に */1 とか書くように促す
  - 日付と曜日の両指定
