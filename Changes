@@ -1,5 +1,4 @@
 Revision history for Perl extension Parse::Crontab
 
-NEXT <<SET RELEASE DATE HERE>>
-    - original version; created by dim
-      at Thu Jan  3 22:07:08 2013.
+0.01    Fri Jan 4 17:04:00 2013
+    - original version
