@@ -2,6 +2,7 @@ use strict;
 use warnings;
 use utf8;
 use Test::More;
+use Test::Exception;
 
 BEGIN {
     use_ok 'Parse::Crontab::Schedule::Entity';
@@ -27,5 +28,13 @@ $entity = new_ok 'Parse::Crontab::Schedule::Entity', [
     range   => [0,7]
 ];
 is_deeply $entity->expanded, [1,2];
+
+throws_ok {
+    Parse::Crontab::Schedule::Entity->new(
+        entity  => 'mon-Tuo',
+        aliases => [qw/sun mon tue wed thu fri sat/],
+        range   => [0,7]
+    );
+} qr/entity not valid/;
 
 done_testing;

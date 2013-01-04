@@ -3,6 +3,8 @@ use 5.008_001;
 use strict;
 use warnings;
 use Carp;
+use Try::Tiny;
+
 use Parse::Crontab::Schedule::Entity;
 
 use Mouse;
@@ -56,7 +58,7 @@ sub BUILD {
     my %s;
     if (my $def = $self->definition) {
         my $definition = $DEFINITIONS{$def};
-        croak sprintf('Unknown schedule definition: [%s]', $def) unless $definition;
+        croak sprintf('bad time specifier: [%s]', $def) unless $definition;
 
         if ($def ne 'reboot') {
             @s{@SCHEDULES} = split /\s+/, $definition;
@@ -72,12 +74,17 @@ sub BUILD {
 
     if (exists $s{minute}) {
         for my $schedule (@SCHEDULES) {
-            $self->$schedule(
-                Parse::Crontab::Schedule::Entity->new(
+            my $entity;
+            try {
+                $entity = Parse::Crontab::Schedule::Entity->new(
                     entity => $s{$schedule},
                     %{$ENTITY_PARAMS{$schedule}},
-                )
-            );
+                );
+            }
+            catch {
+                croak "bad $schedule: $_";
+            };
+            $self->$schedule($entity);
         }
     }
 }

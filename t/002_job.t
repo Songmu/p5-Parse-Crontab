@@ -15,7 +15,7 @@ is $entry->month, '*';
 is $entry->day_of_week, '*';
 is $entry->command, 'perl';
 
-my $entry = new_ok 'Parse::Crontab::Entry::Job', [line => '@hourly perl', line_number => 1];
+$entry = new_ok 'Parse::Crontab::Entry::Job', [line => '@hourly perl', line_number => 1];
 ok !$entry->is_error;
 is $entry->minute, '0';
 is $entry->hour, '*';
