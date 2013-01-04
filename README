@@ -1,19 +1,30 @@
 NAME
-    Parse::Crontab - Perl extention to do something
+    Parse::Crontab - Perl extention to parse Vixie crontab file
 
 VERSION
     This document describes Parse::Crontab version 0.01.
 
 SYNOPSIS
         use Parse::Crontab;
+        my $crontab = Parse::Crontab->new(file => 'crontab.txt');
+        if ($crontab->is_valid) {
+            warn $crontab->error_message;
+        }
+        say $_->command for $crontab->jobs;
 
 DESCRIPTION
-    # TODO
+    This software is for parsing and validating Vixie crontab files.
 
 INTERFACE
   Functions
-   "hello()"
-    # TODO
+   "is_valid()"
+    Checking crontab is valid or not.
+
+   "entries()"
+    returns all entries in crontab
+
+   "jobs()"
+    returns job entries in crontab
 
 DEPENDENCIES
     Perl 5.8.1 or later.
