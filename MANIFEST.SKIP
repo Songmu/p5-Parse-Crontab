@@ -63,5 +63,9 @@
 
 \.bs$
 \.o(?:|bj|ld|ut)$
+\.dimconfig
+\.shipit
 nytprof
 MYMETA\.yml$
+tmp/
+TODO

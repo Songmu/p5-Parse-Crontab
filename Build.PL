@@ -8,13 +8,17 @@ my $build = Module::Build->new(
     dist_abstract  => 'XXX',
 
     build_requires     => {
-        'Test::More'     => '0.98',
-        'Test::Requires' => '0.06',
+        'Test::More'      => '0.98',
+        'Test::Requires'  => '0.06',
+        'Test::Exception' => 0,
     },
     configure_requires => { 'Module::Build' => '0.38' },
     requires           => {
-        perl         => '5.008001',
-        # 'parent'     => 0,
+        perl              => '5.008001',
+        Mouse             => 0,
+        'Path::Class'     => 0,
+        'Try::Tiny'       => 0,
+        'List::MoreUtils' => 0,
     },
 
     no_index    => { 'directory' => [ 'inc' ] },
