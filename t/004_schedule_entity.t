@@ -21,4 +21,11 @@ is_deeply $entity->expanded, [0,2,3,4,6];
 $entity = new_ok 'Parse::Crontab::Schedule::Entity', [entity => '2,3-5/2,2', range => [0,7]];
 is_deeply $entity->expanded, [2,3,5];
 
+$entity = new_ok 'Parse::Crontab::Schedule::Entity', [
+    entity  => 'mon-Tue',
+    aliases => [qw/sun mon tue wed thu fri sat/],
+    range   => [0,7]
+];
+is_deeply $entity->expanded, [1,2];
+
 done_testing;

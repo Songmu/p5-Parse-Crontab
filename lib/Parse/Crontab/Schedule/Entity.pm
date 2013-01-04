@@ -43,6 +43,28 @@ has expanded => (
     isa      => 'ArrayRef[Int]',
 );
 
+has aliases => (
+    is         => 'ro',
+    isa        => 'ArrayRef[Str]',
+    auto_deref => 1,
+);
+
+has _aliases_map => (
+    is       => 'ro',
+    default  => sub {
+        my $self = shift;
+        return unless $self->aliases;
+
+        my $mapping = {};
+        my $num = $self->range_min;
+        for my $alias ($self->aliases) {
+            $mapping->{$alias} = $num;
+            $num++;
+        }
+        $mapping;
+    },
+);
+
 no Mouse;
 
 sub BUILD {
@@ -50,7 +72,12 @@ sub BUILD {
 
     my @expanded;
     my $entity = $self->entity;
-    # TODO mapping
+
+    if ($self->aliases) {
+        my $reg = '('. join('|', map {quotemeta $_} $self->aliases).')';
+        $entity =~ s/$reg/$self->_aliases_map->{lc($1)}/eig;
+    }
+
     for my $item (split /,/, $entity) {
         my ($range_or_num, $increments) = split m!/!, $item, 2;
         if ($increments) {
