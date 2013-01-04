@@ -7,7 +7,7 @@ use Carp;
 our $VERSION = '0.01';
 
 use Mouse;
-use Path::Class qw/file/;
+use Path::Class;
 
 use Parse::Crontab::Entry::Env;
 use Parse::Crontab::Entry::Job;
@@ -26,7 +26,7 @@ has content => (
     default => sub {
         my $self = shift;
         croak 'Attribute file or content is required!' unless defined $self->file;
-        file($self->file)->slurp;
+        Path::Class::file($self->file)->slurp;
     },
 );
 
