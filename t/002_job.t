@@ -8,21 +8,21 @@ BEGIN {
 
 my $entry = new_ok 'Parse::Crontab::Entry::Job', [line => '* * * * * perl', line_number => 1];
 ok !$entry->is_error;
-is $entry->minute, '*';
-is $entry->hour, '*';
-is $entry->day, '*';
-is $entry->month, '*';
-is $entry->day_of_week, '*';
+is $entry->minute->entity, '*';
+is $entry->hour->entity, '*';
+is $entry->day->entity, '*';
+is $entry->month->entity, '*';
+is $entry->day_of_week->entity, '*';
 is $entry->command, 'perl';
 
-$entry = new_ok 'Parse::Crontab::Entry::Job', [line => '@hourly perl', line_number => 1];
+$entry = new_ok 'Parse::Crontab::Entry::Job', [line => '@hourly perl -e', line_number => 1];
 ok !$entry->is_error;
-is $entry->minute, '0';
-is $entry->hour, '*';
-is $entry->day, '*';
-is $entry->month, '*';
-is $entry->day_of_week, '*';
-is $entry->command, 'perl';
+is $entry->minute->entity, '0';
+is $entry->hour->entity, '*';
+is $entry->day->entity, '*';
+is $entry->month->entity, '*';
+is $entry->day_of_week->entity, '*';
+is $entry->command, 'perl -e';
 
 $entry = new_ok 'Parse::Crontab::Entry::Job', [line => '* * * *  perl', line_number => 1];
 ok $entry->is_error;
