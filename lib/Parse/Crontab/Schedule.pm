@@ -41,10 +41,12 @@ my %ENTITY_PARAMS = (
         range => [1,31],
     },
     month   => {
-        range => [1,12],
+        range   => [1,12],
+        aliases => [qw/jan feb mar apr may jun jul aug sep oct nov dec/],
     },
     day_of_week => {
-        range => [0,7],
+        range   => [0,7],
+        aliases => [qw/sun mon tue wed thu fri sat/],
     },
 );
 
