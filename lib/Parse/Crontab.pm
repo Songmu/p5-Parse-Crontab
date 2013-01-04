@@ -63,6 +63,29 @@ sub BUILD {
     }
 }
 
+sub is_valid {
+    my $self = shift;
+
+    for my $entry ($self->entries) {
+        return () if $entry->is_error;
+    }
+    1;
+}
+
+sub error_messages {
+    my $self = shift;
+    my @errors;
+    for my $entry ($self->entries) {
+        push @errors, $entry->error_message if $entry->is_error;
+    }
+    join "\n", @errors;
+}
+
+sub jobs {
+    my $self = shift;
+    grep {$_->isa('Parse::Crontab::Entry::Job')} $self->entries;
+}
+
 sub _decide_entry_class {
     my ($self, $line) = @_;
 

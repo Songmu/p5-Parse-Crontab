@@ -39,4 +39,10 @@ sub set_error {
     $self->is_error(1);
 }
 
+sub error_message {
+    my $self = shift;
+
+    sprintf 'line: %d: %s | %s', $self->line_number, $self->line, join(' ', $self->errors);
+}
+
 __PACKAGE__->meta->make_immutable;
