@@ -15,7 +15,7 @@ has command => (
 has schedule => (
     is  => 'rw',
     isa => 'Parse::Crontab::Schedule',
-    handles => [qw/minute hour day month day_of_week difinition/],
+    handles => [qw/minute hour day month day_of_week definition/],
 );
 
 no Mouse;

@@ -3,6 +3,10 @@ use 5.008_001;
 use strict;
 use warnings;
 
+use overload (
+    q{""}    => 'entity',
+);
+
 use List::MoreUtils qw/uniq/;
 
 use Mouse;

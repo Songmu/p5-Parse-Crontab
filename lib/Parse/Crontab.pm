@@ -124,7 +124,14 @@ This document describes Parse::Crontab version 0.01.
     if ($crontab->is_valid) {
         warn $crontab->error_message;
     }
-    say $_->command for $crontab->jobs;
+    for my $job ($crontab->jobs) {
+        say $job->minute;
+        say $job->hour;
+        say $job->day;
+        say $job->month;
+        say $job->day_of_week;
+        say $job->command;
+    }
 
 =head1 DESCRIPTION
 
