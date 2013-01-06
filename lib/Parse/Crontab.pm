@@ -59,7 +59,7 @@ sub BUILD {
             # overwritten if same key already exists
             $self->env->{$entry->key} = $entry->value;
         }
-        push $self->entries, $entry;
+        push @{$self->entries}, $entry;
     }
 }
 
