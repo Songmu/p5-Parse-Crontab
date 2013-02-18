@@ -57,6 +57,9 @@ sub BUILD {
 
     try {
         $self->schedule(Parse::Crontab::Schedule->new(%args));
+
+        my @warnings = $self->schedule->_check_warnings;
+        $self->set_warning($_) for @warnings;
     }
     catch {
         $self->set_error(sprintf 'schedule error! %s', $_);

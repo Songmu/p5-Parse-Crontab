@@ -43,6 +43,11 @@ has env => (
     default => sub {{}},
 );
 
+has verbose => (
+    is => 'rw',
+    isa => 'Bool',
+    default => 1,
+);
 
 no Mouse;
 
@@ -61,6 +66,13 @@ sub BUILD {
         }
         push @{$self->entries}, $entry;
     }
+
+    if ($self->verbose) {
+        my $error = $self->error_messages;
+        warn $error if $error;
+        my $warn  = $self->warning_messages;
+        warn $warn  if $warn;
+    }
 }
 
 sub is_valid {
@@ -77,6 +89,15 @@ sub error_messages {
     my @errors;
     for my $entry ($self->entries) {
         push @errors, $entry->error_message if $entry->is_error;
+    }
+    join "\n", @errors;
+}
+
+sub warning_messages {
+    my $self = shift;
+    my @errors;
+    for my $entry ($self->entries) {
+        push @errors, $entry->warning_message if $entry->has_warnings;
     }
     join "\n", @errors;
 }
