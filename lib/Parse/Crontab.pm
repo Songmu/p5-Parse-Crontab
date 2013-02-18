@@ -49,6 +49,12 @@ has verbose => (
     default => 1,
 );
 
+has has_user_field => (
+    is => 'rw',
+    isa => 'Bool',
+    default => undef,
+);
+
 no Mouse;
 
 sub BUILD {
@@ -57,7 +63,7 @@ sub BUILD {
     my $line_number = 1;
     for my $line (split /\r?\n/, $self->content) {
         my $entry_class = 'Parse::Crontab::Entry::'. $self->_decide_entry_class($line);
-        my $entry = $entry_class->new(line => $line, line_number => $line_number);
+        my $entry = $entry_class->new(line => $line, line_number => $line_number, has_user_field => $self->has_user_field);
         $line_number++;
 
         if ($entry_class eq 'Parse::Crontab::Entry::Env' && !$entry->is_error) {

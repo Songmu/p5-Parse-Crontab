@@ -15,6 +15,11 @@ has $_ => (
     is => 'rw',
 ) for @SCHEDULES;
 
+has user => (
+    is => 'ro',
+    isa => 'Maybe[Str]',
+);
+
 has definition => (
     is  => 'ro',
     isa => 'Str',
