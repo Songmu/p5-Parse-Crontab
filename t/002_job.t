@@ -24,6 +24,8 @@ is $entry->month->entity, '*';
 is $entry->day_of_week->entity, '*';
 is $entry->command, 'perl -e';
 
+is $entry->minute.'', '0';
+
 $entry = new_ok 'Parse::Crontab::Entry::Job', [line => '* * * *  perl', line_number => 1];
 ok $entry->is_error;
 
