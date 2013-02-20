@@ -4,7 +4,7 @@ use strict;
 use warnings;
 use Carp;
 
-our $VERSION = '0.02';
+our $VERSION = '0.03';
 
 use Mouse;
 use Path::Class;
@@ -165,6 +165,21 @@ This document describes Parse::Crontab version 0.01.
 This software is for parsing and validating Vixie crontab files.
 
 =head1 INTERFACE
+
+=head2 Constructor Options
+
+=head3 C<< file >>
+
+crontab file.
+
+=head3 C<< verbose >>
+
+verbose option (Default: 1).
+If errors/warnings exist, errors/warnings message is dumped immediately when parsing.
+
+=head3 C<< has_user_field >>
+
+for the crontab format having user field (system-width cron files and all that).
 
 =head2 Functions
 
