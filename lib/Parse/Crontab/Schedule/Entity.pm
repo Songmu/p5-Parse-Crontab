@@ -155,4 +155,10 @@ sub _expand_range {
 
 sub stringify {shift->entity}
 
+sub match {
+    my ($self, $num) = @_;
+
+    grep {$num == $_} @{ $self->expanded };
+}
+
 __PACKAGE__->meta->make_immutable;

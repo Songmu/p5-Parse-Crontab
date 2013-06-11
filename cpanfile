@@ -2,6 +2,7 @@ requires 'List::MoreUtils';
 requires 'Mouse';
 requires 'Path::Class';
 requires 'Try::Tiny';
+requires 'Time::Piece';
 requires 'perl', '5.008001';
 
 on build => sub {

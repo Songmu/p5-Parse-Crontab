@@ -119,4 +119,27 @@ sub _check_warnings {
     @warnings;
 }
 
+sub match {
+    my ($self, %args) = @_;
+
+    for my $s (qw/minute hour month/) {
+        return unless $self->$s->match($args{$s});
+    }
+
+    if ($self->day_of_week.'' ne '*') {
+        croak q{args year is not specified. could detect day_of_week.} unless $args{year};
+
+        require Time::Piece;
+        my $str = sprintf '%04d-%02d-%02d', $args{year}, $args{month}, $args{day};
+        my $day = Time::Piece->strptime($str, '%Y-%m-%d');
+
+        return unless $self->day_of_week->match($day->day_of_week);
+    }
+    else {
+        return unless $self->day->match($args{day});
+    }
+
+    1; # matched
+}
+
 __PACKAGE__->meta->make_immutable;
