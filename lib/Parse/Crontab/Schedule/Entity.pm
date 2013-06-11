@@ -17,6 +17,12 @@ has entity => (
     required => 1,
 );
 
+has field => (
+    is       => 'ro',
+    isa      => 'Str',
+    required => 1,
+);
+
 has range => (
     is       => 'ro',
     isa      => 'ArrayRef[Int]',
@@ -106,7 +112,11 @@ sub BUILD {
             }
         }
     }
-
+    if ($self->field eq 'day_of_week') {
+        if (grep {$_ == 7} @expanded) {
+            push @expanded, 0;
+        }
+    }
     @expanded = uniq sort {$a <=> $b} @expanded;
     $self->expanded([@expanded]);
 }

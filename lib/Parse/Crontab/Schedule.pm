@@ -80,6 +80,7 @@ sub BUILD {
                 $entity = Parse::Crontab::Schedule::Entity->new(
                     entity => $s{$schedule},
                     %{$ENTITY_PARAMS{$schedule}},
+                    field  => $schedule,
                 );
             }
             catch {
