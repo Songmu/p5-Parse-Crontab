@@ -1,7 +1,7 @@
 Parse-Crontab-*
 .*
 !.gitignore
-!.shipit
+!.travis.yml
 inc/
 *.o
 *.obj
