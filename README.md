@@ -1,10 +1,6 @@
 # NAME
 
-Parse::Crontab - Perl extention to parse Vixie crontab file
-
-# VERSION
-
-This document describes Parse::Crontab version 0.01.
+Parse::Crontab - Perl extension to parse Vixie crontab file
 
 # SYNOPSIS
 
@@ -66,10 +62,6 @@ Perl 5.8.1 or later.
 All complex software has bugs lurking in it, and this module is no
 exception. If you find a bug please either email me, or add the bug
 to cpan-RT.
-
-# SEE ALSO
-
-[perl](http://search.cpan.org/perldoc?perl)
 
 # AUTHOR
 

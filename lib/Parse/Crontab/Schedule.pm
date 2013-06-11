@@ -143,3 +143,59 @@ sub match {
 }
 
 __PACKAGE__->meta->make_immutable;
+__END__
+=for stopwords cron crontab
+
+=head1 NAME
+
+Parse::Crontab::Schedule - Perl extension to parse Vixie crontab schedule
+
+=head1 SYNOPSIS
+
+    use Parse::Crontab::Schedule;
+    my $schedule = Parse::Crontab::Schedule->parse('*/1 12 10 10 *');
+    if ($schedule->match(year => 2013, month => 10, day => 10, hour => 12, minute => 5) ) {
+        ...
+    }
+
+=head1 DESCRIPTION
+
+This software is for parsing and validating Vixie crontab files.
+
+=head1 INTERFACE
+
+=head2 Constructor
+
+=head3 C<< $schedule = Parse::Crontab::Schedule->parse($str) >>
+
+C<$str> is crontab schedule string like C<'*/1 12 10 10 *>.
+
+=head2 Functions
+
+=head3 C<< $bool = $schedule->match(%opt) >>
+
+The schedule matches or not.
+Keys of C<%opt> are C<minute>, C<hour>, C<day>, C<month>, C<year>.
+
+=head1 DEPENDENCIES
+
+Perl 5.8.1 or later.
+
+=head1 BUGS
+
+All complex software has bugs lurking in it, and this module is no
+exception. If you find a bug please either email me, or add the bug
+to cpan-RT.
+
+=head1 AUTHOR
+
+Masayuki Matsuki E<lt>y.songmu@gmail.comE<gt>
+
+=head1 LICENSE AND COPYRIGHT
+
+Copyright (c) 2013, Masayuki Matsuki. All rights reserved.
+
+This library is free software; you can redistribute it and/or modify
+it under the same terms as Perl itself.
+
+=cut
