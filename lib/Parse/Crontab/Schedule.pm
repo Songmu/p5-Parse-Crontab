@@ -101,7 +101,12 @@ sub parse {
         $args{$schedule} = $arg;
     }
 
-    $cls->new(%args);
+    my $self = $cls->new(%args);
+
+    if (my @warns = $self->_check_warnings) {
+        croak join "\n", @warns;
+    }
+    $self;
 }
 
 sub _check_warnings {

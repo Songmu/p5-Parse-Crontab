@@ -2,6 +2,7 @@ use strict;
 use warnings;
 use utf8;
 use Test::More;
+use Test::Exception;
 use Parse::Crontab::Schedule;
 
 my $schedule = Parse::Crontab::Schedule->parse('*/1 22 * * 5-7');
@@ -27,5 +28,9 @@ subtest normal_match => sub {
     ok !$schedule->match(day => 10, month => 11, hour => 13, minute => 4);
     ok !$schedule->match(day => 11, month => 11, hour => 12, minute => 4);
 };
+
+throws_ok {
+    Parse::Crontab::Schedule->parse('* 12 10 11 *');
+} qr/Specifying '\*'/;
 
 done_testing;
