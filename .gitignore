@@ -29,3 +29,10 @@ cover_db*
 Build
 _build/*
 tmp/
+/Parse-Crontab-*
+/.build
+/_build_params
+/Build
+!Build/
+!META.json
+!LICENSE
