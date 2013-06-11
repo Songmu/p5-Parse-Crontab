@@ -91,6 +91,19 @@ sub BUILD {
     }
 }
 
+sub parse {
+    my ($cls, $str) = @_;
+
+    my @s = split /\s+/, $str;
+    my %args;
+    for my $schedule (@SCHEDULES) {
+        my $arg = shift @s;
+        $args{$schedule} = $arg;
+    }
+
+    $cls->new(%args);
+}
+
 sub _check_warnings {
     my $self = shift;
 
