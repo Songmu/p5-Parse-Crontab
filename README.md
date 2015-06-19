@@ -6,8 +6,8 @@ Parse::Crontab - Perl extension to parse Vixie crontab file
 
     use Parse::Crontab;
     my $crontab = Parse::Crontab->new(file => 'crontab.txt');
-    if ($crontab->is_valid) {
-        warn $crontab->error_message;
+    unless ($crontab->is_valid) {
+        warn $crontab->error_messages;
     }
     for my $job ($crontab->jobs) {
         say $job->minute;
